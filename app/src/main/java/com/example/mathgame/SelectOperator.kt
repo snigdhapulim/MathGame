@@ -38,6 +38,7 @@ class SelectOperator : AppCompatActivity() {
         binding.start.setOnClickListener{view: View->
             val intent = Intent(this, QuizActivity::class.java)
             intent.putExtra(EXTRA_TEXT,quizViewModel.getOperator)
+            intent.putExtra("OPERATOR", quizViewModel.operationChosen)
             startActivity(intent)
         }
 
@@ -55,11 +56,13 @@ class SelectOperator : AppCompatActivity() {
                     if (checked) {
                         binding.start.isEnabled = true;
                         quizViewModel.setoperator("Addition")
+                        quizViewModel.chooseOperation("add")
                     }
                 R.id.radio_subtraction ->
                     if (checked) {
                         binding.start.isEnabled = true;
                         quizViewModel.setoperator("Subtraction")
+                        quizViewModel.chooseOperation("sub")
                     }
             }
         }

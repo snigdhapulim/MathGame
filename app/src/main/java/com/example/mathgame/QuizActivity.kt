@@ -15,6 +15,7 @@ import androidx.core.text.set
 import androidx.core.widget.addTextChangedListener
 import com.example.mathgame.databinding.ActivityQuizBinding
 import com.example.mathgame.databinding.ActivitySelectOperatorBinding
+import com.google.android.material.snackbar.Snackbar
 
 private const val TAG = "QuizActivity"
 
@@ -35,6 +36,7 @@ class QuizActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         operator=intent.getStringExtra(EXTRA_TEXT).toString()
+        quizViewModel.operationChosen = intent.getStringExtra("OPERATOR").toString()
 
         builder=AlertDialog.Builder(this)
 
@@ -78,12 +80,13 @@ class QuizActivity : AppCompatActivity() {
         binding.question.text=quizViewModel.getCurrentQuestion
     }
     private fun generateQuestion(){
-        val number1=(0..100).random()
-        val number2=(0..100).random()
+        val number1=(1..100).random()
+        val number2=(1..20).random()
 
         val opt=if(operator.equals("Addition")){"+"}
         else{"-"}
 
+        quizViewModel.setNumbers(number1.toString(), number2.toString())
         quizViewModel.addQuestion(number1.toString()+" "+opt+" "+number2.toString())
         existingQuestion()
     }
@@ -91,13 +94,34 @@ class QuizActivity : AppCompatActivity() {
         //should add if ans is right or wrong!
         quizViewModel.setAnswered(binding.answer.text.toString().toInt())
         //accordingly toster value!
-        Toast.makeText(this, "Answer!", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "Answer!", Toast.LENGTH_SHORT).show()
+
+        Log.i("Check Answer", "Checking answer here" + quizViewModel.operationChosen)
+        if(quizViewModel.operationChosen.equals("+")){
+            val answer = Integer.parseInt(quizViewModel.firstNum) + Integer.parseInt(quizViewModel.secondNum)
+            if(Integer.parseInt(binding.answer.text.toString()) == answer){
+                Snackbar.make(binding.root, "Correct Answer", Snackbar.LENGTH_SHORT).show()
+                quizViewModel.updateScore()
+                Log.i("Check Answer", "Correct Answer")
+            }else{
+                Snackbar.make(binding.root, "Incorrect Answer", Snackbar.LENGTH_LONG).show()
+                Log.i("Check Answer", "It seems wrong")
+            }
+        }else{
+            val answer = Integer.parseInt(quizViewModel.firstNum) - Integer.parseInt(quizViewModel.secondNum)
+            if(Integer.parseInt(binding.answer.text.toString()) == answer){
+                quizViewModel.updateScore()
+                Snackbar.make(binding.root, "Correct Answer", Snackbar.LENGTH_SHORT).show()
+            }else{
+                Snackbar.make(binding.root, "Incorrect Answer", Snackbar.LENGTH_LONG).show()
+            }
+        }
 
     }
     private fun nextQuestion(){
         if(quizViewModel.getQuestionSize==10){
             //pop up
-            builder.setTitle("Quiz over! You Scored ${"insert score "}%!")
+            builder.setTitle("Quiz over! You Scored ${quizViewModel.score}!")
                 .setMessage("Do you want to check your answers?")
                 .setCancelable(true)
                 .setPositiveButton("Yes"){dialogInterface ,it->

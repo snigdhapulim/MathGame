@@ -6,6 +6,16 @@ class QuizViewModel: ViewModel()  {
     private var operator="";
     private var questionBank = mutableListOf<Question>();
 
+//    Scoring mech Data
+
+    var score = 0
+
+    var operationChosen = ""
+
+    var firstNum = ""
+
+    var secondNum = ""
+
     fun addQuestion(question:String){
         val questionArr=question.split(" ")
         val ans=if(questionArr[1].equals("+")){questionArr[0].toInt()+questionArr[2].toInt()}
@@ -41,6 +51,24 @@ class QuizViewModel: ViewModel()  {
         return arr
     }
 
+//    Scoring activity vals
+
+    fun chooseOperation(operation:String){
+        if(operation.equals("add")){
+            operationChosen = "+";
+        }else{
+            operationChosen = "-";
+        }
+    }
+
+    fun setNumbers(firstNum: String, secondNum: String){
+        this.firstNum = firstNum
+        this.secondNum = secondNum
+    }
+
+    fun updateScore(){
+        score +=1;
+    }
 
 
 
