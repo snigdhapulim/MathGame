@@ -50,32 +50,50 @@
         >
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="289dp"
+            android:layout_height="wrap_content"
             android:gravity="start"
-            android:padding="15dp">
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/answer"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:drawablePadding="8dp"
-                android:inputType="numberSigned"
-                android:padding="8dp"
-                android:textColor="@color/navy_blue"
-                android:layout_marginRight="50dp"
-                android:hint="Answer"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:padding="15dp">
+
+                <EditText
+                    android:id="@+id/answer"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="50dp"
+                    android:drawablePadding="8dp"
+                    android:hint="Answer"
+                    android:inputType="numberSigned"
+                    android:padding="8dp"
+                    android:textColor="@color/navy_blue" />
+
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:backgroundTint="@color/navy_blue"
+                    android:enabled="false"
+                    android:text="@string/submit"
+                    android:textSize="18dp"
+                    app:cornerRadius="20dp" />
+
+            </LinearLayout>
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/re_start"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:id="@+id/submit"
-                android:text="@string/submit"
-                android:textSize="18dp"
                 android:backgroundTint="@color/navy_blue"
+                android:text="@string/re_start"
+                android:textSize="18sp"
                 app:cornerRadius="20dp"
-                android:enabled="false"/>
-
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

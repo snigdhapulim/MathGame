@@ -1,21 +1,19 @@
 package com.example.mathgame
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.View
-import android.widget.Toast
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.core.text.set
-import androidx.core.widget.addTextChangedListener
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mathgame.databinding.ActivityQuizBinding
-import com.example.mathgame.databinding.ActivitySelectOperatorBinding
 import com.google.android.material.snackbar.Snackbar
+
 
 private const val TAG = "QuizActivity"
 
@@ -75,6 +73,10 @@ class QuizActivity : AppCompatActivity() {
             checkAnswer();
             nextQuestion();
         }
+
+        binding.reStart.setOnClickListener{view:View->
+            finish()
+        }
     }
     private fun existingQuestion(){
         binding.question.text=quizViewModel.getCurrentQuestion
@@ -91,31 +93,35 @@ class QuizActivity : AppCompatActivity() {
         existingQuestion()
     }
     private fun checkAnswer(){
-        //should add if ans is right or wrong!
         quizViewModel.setAnswered(binding.answer.text.toString().toInt())
-        //accordingly toster value!
-//        Toast.makeText(this, "Answer!", Toast.LENGTH_SHORT).show()
 
         Log.i("Check Answer", "Checking answer here" + quizViewModel.operationChosen)
+        var snack:Snackbar;
         if(quizViewModel.operationChosen.equals("+")){
             val answer = Integer.parseInt(quizViewModel.firstNum) + Integer.parseInt(quizViewModel.secondNum)
             if(Integer.parseInt(binding.answer.text.toString()) == answer){
-                Snackbar.make(binding.root, "Correct Answer", Snackbar.LENGTH_SHORT).show()
+                snack=Snackbar.make(binding.root, "Correct Answer", Snackbar.LENGTH_SHORT);
                 quizViewModel.updateScore()
                 Log.i("Check Answer", "Correct Answer")
             }else{
-                Snackbar.make(binding.root, "Incorrect Answer", Snackbar.LENGTH_LONG).show()
+                snack=Snackbar.make(binding.root, "Incorrect Answer", Snackbar.LENGTH_LONG);
                 Log.i("Check Answer", "It seems wrong")
             }
         }else{
             val answer = Integer.parseInt(quizViewModel.firstNum) - Integer.parseInt(quizViewModel.secondNum)
             if(Integer.parseInt(binding.answer.text.toString()) == answer){
                 quizViewModel.updateScore()
-                Snackbar.make(binding.root, "Correct Answer", Snackbar.LENGTH_SHORT).show()
+                snack=Snackbar.make(binding.root, "Correct Answer", Snackbar.LENGTH_SHORT);
             }else{
-                Snackbar.make(binding.root, "Incorrect Answer", Snackbar.LENGTH_LONG).show()
+                snack=Snackbar.make(binding.root, "Incorrect Answer", Snackbar.LENGTH_LONG);
             }
         }
+
+        val view: View = snack.getView()
+        val params = view.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        view.layoutParams = params
+        snack.show()
 
     }
     private fun nextQuestion(){

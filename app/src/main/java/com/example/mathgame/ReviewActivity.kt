@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +38,10 @@ class ReviewActivity : AppCompatActivity() {
 
         recyclerView.layoutManager=LinearLayoutManager(this)
         recyclerView.adapter=questionsAdaptor
+
+        binding.reTake.setOnClickListener{view: View ->
+            finish()
+        }
 
     }
     private fun addView(){

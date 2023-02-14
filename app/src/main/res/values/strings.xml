@@ -9,4 +9,6 @@
     <string name="subtraction">Subtraction</string>
     <string name="start">Start Quiz</string>
     <string name="submit">submit</string>
+    <string name="re_start">re-start quiz</string>
+    <string name="re_take">re-take quiz</string>
 </resources>
