@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
@@ -95,17 +94,14 @@ class QuizActivity : AppCompatActivity() {
     private fun checkAnswer(){
         quizViewModel.setAnswered(binding.answer.text.toString().toInt())
 
-        Log.i("Check Answer", "Checking answer here" + quizViewModel.operationChosen)
         var snack:Snackbar;
         if(quizViewModel.operationChosen.equals("+")){
             val answer = Integer.parseInt(quizViewModel.firstNum) + Integer.parseInt(quizViewModel.secondNum)
             if(Integer.parseInt(binding.answer.text.toString()) == answer){
                 snack=Snackbar.make(binding.root, "Correct Answer", Snackbar.LENGTH_SHORT);
                 quizViewModel.updateScore()
-                Log.i("Check Answer", "Correct Answer")
             }else{
                 snack=Snackbar.make(binding.root, "Incorrect Answer", Snackbar.LENGTH_LONG);
-                Log.i("Check Answer", "It seems wrong")
             }
         }else{
             val answer = Integer.parseInt(quizViewModel.firstNum) - Integer.parseInt(quizViewModel.secondNum)
@@ -131,7 +127,6 @@ class QuizActivity : AppCompatActivity() {
                 .setMessage("Do you want to check your answers?")
                 .setCancelable(true)
                 .setPositiveButton("Yes"){dialogInterface ,it->
-                    Log.d("TAG",quizViewModel.getListOfQuestion().toString())
                     val intent = Intent(this, ReviewActivity::class.java)
                     intent.putExtra(EXTRA_TEXT_LIST,quizViewModel.getListOfQuestion())
                     startActivity(intent)

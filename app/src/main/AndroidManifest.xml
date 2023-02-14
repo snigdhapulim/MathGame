@@ -16,7 +16,8 @@
             android:exported="false" />
         <activity
             android:name=".QuizActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true"/>
         <activity
             android:name=".SelectOperator"
             android:exported="false" />
