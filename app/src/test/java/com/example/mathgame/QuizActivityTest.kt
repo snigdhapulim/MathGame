@@ -16,23 +16,27 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import org.junit.Rule
 import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4ClassRunner::class)
 public class QuizActivityTest {
 
-    private lateinit var scenario: ActivityScenario<QuizActivity>
+    val savedStateHandle = SavedStateHandle()
+    val quizViewModel = QuizViewModel(savedStateHandle)
 
-    @Before
-    fun setUp() {
-        scenario = launch(QuizActivity::class.java)
-    }
-    @After
-    fun tearDown() {
-        scenario.close()
+    @Test
+    fun checkNumberEntry() {
+        quizViewModel.setNumbers("1", "2")
+        assertEquals(quizViewModel.firstNum, "1")
+        assertEquals(quizViewModel.secondNum, "2")
     }
 
     @Test
-    fun checkIfQuestionGenerated() {
-        val quizViewModel = QuizViewModel()
-        onView(withId(R.id.question)).check(matches(withText(quizViewModel.getCurrentQuestion)))
+    fun checkQuestionEntry() {
+        quizViewModel.addQuestion("1 + 2")
+        assertEquals(quizViewModel.getListOfQuestion().size, 1)
+    }
+
+    @Test
+    fun checkOperatorEntry() {
+        quizViewModel.setoperator("+")
+        assertEquals(quizViewModel.getOperator, "+")
     }
 }

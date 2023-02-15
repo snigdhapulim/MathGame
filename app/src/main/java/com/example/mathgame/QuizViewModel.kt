@@ -1,8 +1,9 @@
 package com.example.mathgame
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
-class QuizViewModel: ViewModel()  {
+class QuizViewModel(private val savedStateHandle: SavedStateHandle): ViewModel()  {
     private var operator="";
     private var questionBank = mutableListOf<Question>();
 
