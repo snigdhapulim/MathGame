@@ -1,12 +1,21 @@
 package com.example.mathgame
 
+import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso.onView
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.After
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import org.junit.Before
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.*
+
+import org.hamcrest.core.StringContains.containsString
+
 
 /**
  * Instrumented test, which will execute on an Android device.
